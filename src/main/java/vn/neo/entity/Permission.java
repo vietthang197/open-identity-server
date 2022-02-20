@@ -15,8 +15,7 @@ import java.util.Date;
 public class Permission implements Serializable {
     @Id
     private Long permissionId;
-    private String code;
-    private String displayName;
+    private String name;
     private Date createdDate;
 
     public Permission() {
@@ -30,20 +29,12 @@ public class Permission implements Serializable {
         this.permissionId = permissionId;
     }
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getCreatedDate() {
