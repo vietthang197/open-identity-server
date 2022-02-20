@@ -1,9 +1,6 @@
 package vn.neo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -18,6 +15,7 @@ import java.util.Set;
 public class Role implements Serializable {
     @Id
     private Long roleId;
+    @Column(unique = true, nullable = false, length = 100)
     private String name;
     private Date createDate;
     @ManyToMany
