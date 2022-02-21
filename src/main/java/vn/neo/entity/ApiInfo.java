@@ -1,9 +1,6 @@
 package vn.neo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -18,6 +15,8 @@ public class ApiInfo implements Serializable {
     private String path;
     @Column(nullable = false, length = 50)
     private String method;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ApiGroup apiGroup;
 
     public ApiInfo() {
     }
@@ -52,5 +51,13 @@ public class ApiInfo implements Serializable {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public ApiGroup getApiGroup() {
+        return apiGroup;
+    }
+
+    public void setApiGroup(ApiGroup apiGroup) {
+        this.apiGroup = apiGroup;
     }
 }

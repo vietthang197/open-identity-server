@@ -18,7 +18,7 @@ public class UserInfoController {
         this.userInfoService = userInfoService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<UserInfoDto> getAllUserInfo() {
         return userInfoService.findAll();
     }
