@@ -31,8 +31,8 @@ public class UserJWTController {
 
     @PostMapping("/authenticate")
     public BasicResponseDto login(@RequestBody @Valid LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken aupt = new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(aupt);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return new BasicResponseDto();
     }
 }

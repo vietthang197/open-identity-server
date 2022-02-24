@@ -11,6 +11,15 @@ public class BasicResponseDto implements Serializable {
     private String message;
     private Object data;
 
+    public BasicResponseDto() {
+    }
+
+    public BasicResponseDto(int status, String message, Object data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
     public int getStatus() {
         return status;
     }
