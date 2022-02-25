@@ -1,6 +1,7 @@
 package vn.neo.services.impl;
 
 import org.springframework.stereotype.Service;
+import vn.neo.dto.BasicResponseDto;
 import vn.neo.dto.UserInfoDto;
 import vn.neo.mapper.DtoMapper;
 import vn.neo.repository.UserInfoRepository;
@@ -22,5 +23,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<UserInfoDto> findAll() {
         return dtoMapper.listUserInfoToDto(userInfoRepository.findAll());
+    }
+
+    @Override
+    public BasicResponseDto getUserInfomation() {
+        return null;
     }
 }

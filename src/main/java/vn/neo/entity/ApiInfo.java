@@ -17,6 +17,7 @@ public class ApiInfo implements Serializable {
     @Column(nullable = false, length = 50)
     private String method;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_api_group")
     private ApiGroup apiGroup;
 
     public ApiInfo() {

@@ -20,7 +20,12 @@ public class Role implements Serializable {
     private String name;
     private Date createDate;
     @ManyToMany
-    private Set<Permission> permissions = new HashSet<>();
+    @JoinTable(name = "role_api_access", joinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "roleId")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "api_id", referencedColumnName = "apiId")
+    })
+    private Set<ApiInfo> apiInfoList = new HashSet<>();
 
     public Role() {
     }
@@ -49,11 +54,11 @@ public class Role implements Serializable {
         this.createDate = createDate;
     }
 
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public Set<ApiInfo> getApiInfoList() {
+        return apiInfoList;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public void setApiInfoList(Set<ApiInfo> apiInfoList) {
+        this.apiInfoList = apiInfoList;
     }
 }

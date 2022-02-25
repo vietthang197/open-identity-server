@@ -14,7 +14,7 @@ public class ApiGroup implements Serializable {
     @Id
     private Long apiId;
     private String name;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "apiGroup")
     private Set<ApiInfo> apiInfoList;
 
     public ApiGroup() {

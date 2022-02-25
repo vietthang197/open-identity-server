@@ -20,12 +20,14 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         logger.info("Chay vao hasPermission");
-        return false;
+        logger.info("target domain object {}", targetDomainObject);
+        logger.info("permission {}", permission);
+        return true;
     }
 
     @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
         logger.info("Chay vao hasPermission");
-        return false;
+        return true;
     }
 }

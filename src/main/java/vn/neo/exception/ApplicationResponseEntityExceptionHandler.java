@@ -46,7 +46,7 @@ public class ApplicationResponseEntityExceptionHandler extends ResponseEntityExc
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<BasicResponseDto> handleAccessDeniedException(Exception ex, WebRequest request) {
         logger.error(ex);
-        BasicResponseDto res = new BasicResponseDto(ErrorCode.ERR_401, ex.getMessage(), null);
+        BasicResponseDto res = new BasicResponseDto(ErrorCode.ERR_403, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).body(res);
     }
 

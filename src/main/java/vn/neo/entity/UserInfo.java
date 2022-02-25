@@ -29,6 +29,14 @@ public class UserInfo implements Serializable {
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "user_api_access", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "api_id", referencedColumnName = "apiId")
+    })
+    private Set<ApiInfo> apiList = new HashSet<>();
+
     public UserInfo() {
     }
 
