@@ -11,6 +11,7 @@ import java.util.Set;
 public class UserInfo implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
     @Column(unique = true, nullable = false, length = 100)
     private String username;

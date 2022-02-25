@@ -42,12 +42,10 @@ public class ApplicationResponseEntityExceptionHandler extends ResponseEntityExc
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(res);
     }
 
-
-
     @SuppressWarnings("unchecked")
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        logger.error(ex);
+        ex.printStackTrace();
         BasicResponseDto res = new BasicResponseDto(ErrorCode.ERR_500, "Lỗi hệ thống", null);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(res);
     }

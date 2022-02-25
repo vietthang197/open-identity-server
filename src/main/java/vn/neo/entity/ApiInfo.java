@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class ApiInfo implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long apiId;
     @Column(length = 500)
     private String name;

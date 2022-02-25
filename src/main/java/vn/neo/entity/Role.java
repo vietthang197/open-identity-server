@@ -14,6 +14,7 @@ import java.util.Set;
 @Table(name = "role")
 public class Role implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleId;
     @Column(unique = true, nullable = false, length = 100)
     private String name;

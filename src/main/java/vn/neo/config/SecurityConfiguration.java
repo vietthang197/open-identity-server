@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import vn.neo.jwt.JWTConfigurer;
@@ -22,13 +23,16 @@ import vn.neo.jwt.TokenProvider;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
-
     private final CorsFilter corsFilter;
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, UserDetailsService userService) {
+    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
