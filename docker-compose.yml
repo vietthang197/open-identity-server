@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: open-identity-server
+    ports:
+      - "9999:9999"
+    tty: true
