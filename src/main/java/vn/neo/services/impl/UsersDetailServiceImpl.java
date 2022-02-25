@@ -29,6 +29,11 @@ public class UsersDetailServiceImpl implements UserDetailsService {
         if (!userInfoOpt.isPresent())
             throw new UsernameNotFoundException("User doesn't exists");
         UserInfo userInfo = userInfoOpt.get();
-        return new Users(userInfo.getUsername(), userInfo.getPassword(), Collections.emptyList());
+        Users users = new Users(userInfo.getUsername(), userInfo.getPassword(), Collections.emptyList());
+        users.setFullName(userInfo.getFullName());
+        users.setUserId(userInfo.getUserId());
+        users.setEmail(userInfo.getEmail());
+        users.setPhone(userInfo.getPhone());
+        return users;
     }
 }

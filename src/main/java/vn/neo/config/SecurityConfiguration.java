@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import vn.neo.jwt.JWTConfigurer;
@@ -24,15 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
 
-
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -46,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/**")
+                .antMatchers("/authenticate", "/error")
                 .permitAll().anyRequest()
                 .authenticated().and()
                 .apply(securityConfigurerAdapter());

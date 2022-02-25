@@ -1,16 +1,21 @@
 package vn.neo.jwt;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import vn.neo.obj.Users;
 
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -24,6 +29,7 @@ public class TokenProvider {
     private static final String SECRET = "24jlrkweuoYIUOI#@%$#&&^^aafsdefajjfklui78953gg75789iothjkp9sdfxcbyeuyYJLKJGY798tr67538*^#%^&%^$&*hfjhajkdfhiuy423rwiurhj567542346^^^jkerjwiry67^$*&#^*($hjkdahfnjasydf5674893";
 
     private static final String USERNAME_KEY = "username";
+    private static final String FULLNAME_KEY = "full_name";
     private long tokenValidityInMilliseconds;
     private final Algorithm algorithm;
 
@@ -48,6 +54,7 @@ public class TokenProvider {
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
         return JWT.create()
                 .withClaim(USERNAME_KEY, usersInfo.getUsername())
+                .withClaim(FULLNAME_KEY, usersInfo.getFullName())
                 .withIssuedAt(new Date(now))
                 .withExpiresAt(validity)
                 .sign(algorithm);
@@ -57,25 +64,15 @@ public class TokenProvider {
      * function get information from token
      *
      * @param token
-     * @param path
-     * @param method
      * @return
      */
-    public Authentication getAuthentication(String token, String path, String method) {
-//        Claims claims = Jwts.parserBuilder()
-//                .setSigningKey(key)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody();
-//        Set<CustomGrantedAuthority> authorities = Arrays.stream(String.valueOf(claims.get(TokenProvider.AUTHORITIES_KEY)).split(",")).map(CustomGrantedAuthority::new).collect(Collectors.toSet());
-//        Users principal = new Users(claims, claims.getSubject(), "", authorities);
-//
-//        if (claims.getSubject() == null) { // thang sua o day
-//            return new UsernamePasswordAuthenticationToken(null, token, authorities);
-//        }
-//
-//        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
-        return null;
+    public Authentication getAuthentication(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        String username = decodedJWT.getClaims().get(USERNAME_KEY).asString();
+        String fullName = decodedJWT.getClaims().get(FULLNAME_KEY).asString();
+        Users users = new Users(username, "", Collections.emptyList());
+        users.setFullName(fullName);
+        return new UsernamePasswordAuthenticationToken(users, token, Collections.emptyList());
     }
 
     /**
@@ -85,12 +82,13 @@ public class TokenProvider {
      * @return
      */
     public boolean validateToken(String authToken) {
-//        try {
-//            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken);
-//            return true;
-//        } catch (JwtException | IllegalArgumentException e) {
-//            logger.info("Invalid JWT token.");
-//        }
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            verifier.verify(authToken);
+            return true;
+        } catch (JWTVerificationException e) {
+            logger.info("Invalid JWT token.");
+        }
         return false;
     }
 }
